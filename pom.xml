@@ -71,6 +71,14 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
+        <configuration>
+          <excludes>
+            <exclude>com/github/rweisleder/jfairy/**</exclude>
+          </excludes>
+          <testExcludes>
+            <testExclude>com/github/rweisleder/jfairy/**</testExclude>
+          </testExcludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>
