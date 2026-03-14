@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 
 public class FairyExtension implements ParameterResolver, TestInstancePostProcessor {
 
-    private static final List<ObjectProvider> providers = List.of(new BooleanProvider(), new IntegerProvider(), new StringProvider(), new EnumProvider(), new PersonProvider());
+    private static final List<ObjectProvider> providers = List.of(new BooleanProvider(), new IntegerProvider(), new StringProvider(), new EnumProvider(), new PersonProvider(), new CompanyProvider());
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext,
