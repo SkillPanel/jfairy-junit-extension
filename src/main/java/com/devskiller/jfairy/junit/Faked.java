@@ -11,8 +11,10 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Faked {
 
+    int NO_SEED = -1;
+
     String locale() default "";
 
-    int seed() default -1;
+    int seed() default NO_SEED;
 
 }

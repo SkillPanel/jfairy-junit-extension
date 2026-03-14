@@ -1,6 +1,6 @@
 package com.devskiller.jfairy.junit;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.company.Company;
@@ -21,7 +21,7 @@ class FieldInjectionTests {
 
         @Test
         void booleanField() {
-            assertNotNull(b);
+            assertThat(b).isNotNull();
         }
     }
 
@@ -32,7 +32,7 @@ class FieldInjectionTests {
 
         @Test
         void integerField() {
-            assertNotNull(i);
+            assertThat(i).isNotNull();
         }
     }
 
@@ -43,7 +43,7 @@ class FieldInjectionTests {
 
         @Test
         void stringField() {
-            assertNotNull(s);
+            assertThat(s).isNotNull();
         }
     }
 
@@ -54,7 +54,7 @@ class FieldInjectionTests {
 
         @Test
         void enumField() {
-            assertNotNull(month);
+            assertThat(month).isNotNull();
         }
     }
 
@@ -65,7 +65,7 @@ class FieldInjectionTests {
 
         @Test
         void personField() {
-            assertNotNull(person);
+            assertThat(person).isNotNull();
         }
     }
 
@@ -76,7 +76,7 @@ class FieldInjectionTests {
 
         @Test
         void companyField() {
-            assertNotNull(company);
+            assertThat(company).isNotNull();
         }
     }
 
@@ -87,7 +87,7 @@ class FieldInjectionTests {
 
         @Test
         void addressField() {
-            assertNotNull(address);
+            assertThat(address).isNotNull();
         }
     }
 
@@ -98,7 +98,7 @@ class FieldInjectionTests {
 
         @Test
         void fairyField() {
-            assertNotNull(fairy);
+            assertThat(fairy).isNotNull();
         }
     }
 }

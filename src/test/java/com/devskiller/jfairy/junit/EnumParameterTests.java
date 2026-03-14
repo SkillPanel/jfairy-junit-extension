@@ -1,6 +1,6 @@
 package com.devskiller.jfairy.junit;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Month;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,6 @@ class EnumParameterTests {
 
     @Test
     void enumParameter(@Faked Month month) {
-        assertNotNull(month);
+        assertThat(month).isNotNull();
     }
 }

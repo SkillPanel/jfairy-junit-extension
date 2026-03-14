@@ -15,9 +15,8 @@ class StringProvider extends ObjectProvider {
 
     @Override
     Object createFor(AnnotatedElement annotatedElement, Class<?> targetType, Fairy fairy) {
-        StringWith config = findAnnotation(annotatedElement, StringWith.class).orElse(null);
-        int maxLength = config != null ? config.maxLength() : 4000;
-        StringWith.StringType type = config != null ? config.type() : StringWith.StringType.RANDOM;
+        int maxLength = findAnnotation(annotatedElement, StringWith.class).map(StringWith::maxLength).orElse(4000);
+        StringWith.StringType type = findAnnotation(annotatedElement, StringWith.class).map(StringWith::type).orElse(StringWith.StringType.RANDOM);
 
         TextProducer producer = fairy.textProducer().limitedTo(maxLength);
         return switch (type) {

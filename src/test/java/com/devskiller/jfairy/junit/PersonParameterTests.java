@@ -2,7 +2,6 @@ package com.devskiller.jfairy.junit;
 
 import static com.devskiller.jfairy.producer.person.Person.Sex.MALE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.devskiller.jfairy.producer.person.Person;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ class PersonParameterTests {
 
     @Test
     void person(@Faked Person person) {
-        assertNotNull(person);
+        assertThat(person).isNotNull();
     }
 
     @Test

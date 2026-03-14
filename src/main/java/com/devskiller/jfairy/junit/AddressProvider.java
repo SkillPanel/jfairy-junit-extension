@@ -13,6 +13,7 @@ class AddressProvider extends ObjectProvider {
 
     @Override
     Object createFor(AnnotatedElement annotatedElement, Class<?> targetType, Fairy fairy) {
+        // jFairy does not expose a standalone address factory; addresses are generated as part of a Person
         return fairy.person().getAddress();
     }
 

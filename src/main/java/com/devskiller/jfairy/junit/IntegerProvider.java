@@ -14,10 +14,9 @@ class IntegerProvider extends ObjectProvider {
 
     @Override
     Object createFor(AnnotatedElement annotatedElement, Class<?> targetType, Fairy fairy) {
-        IntegerWith config = findAnnotation(annotatedElement, IntegerWith.class).orElse(null);
-        int min = config != null ? config.min() : 1;
-        int max = config != null ? config.max() : Integer.MAX_VALUE;
-        return fairy.baseProducer().randomBetween(min, max);
+        return findAnnotation(annotatedElement, IntegerWith.class)
+                .map(config -> fairy.baseProducer().randomBetween(config.min(), config.max()))
+                .orElseGet(() -> fairy.baseProducer().randomBetween(1, Integer.MAX_VALUE));
     }
 
 }

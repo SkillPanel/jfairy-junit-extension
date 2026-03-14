@@ -1,7 +1,5 @@
 package com.devskiller.jfairy.junit;
 
-import static com.devskiller.jfairy.producer.person.Person.Sex.FEMALE;
-import static com.devskiller.jfairy.producer.person.Person.Sex.MALE;
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 
 import com.devskiller.jfairy.Fairy;
@@ -14,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class PersonProvider extends ObjectProvider {
+
+    private static final PersonProperty[] EMPTY_PROPERTIES = new PersonProperty[0];
 
     @Override
     boolean supports(Class<?> targetType) {
@@ -33,18 +33,17 @@ class PersonProvider extends ObjectProvider {
 
                     Sex[] sex = config.sex();
                     if (sex.length == 1) {
-                        if (sex[0] == MALE) {
-                            properties.add(PersonProperties.male());
-                        } else if (sex[0] == FEMALE) {
-                            properties.add(PersonProperties.female());
+                        switch (sex[0]) {
+                            case MALE -> properties.add(PersonProperties.male());
+                            case FEMALE -> properties.add(PersonProperties.female());
                         }
                     }
 
                     properties.add(PersonProperties.ageBetween(config.minAge(), config.maxAge()));
 
-                    return properties.toArray(new PersonProperty[0]);
+                    return properties.toArray(EMPTY_PROPERTIES);
                 })
-                .orElseGet(() -> new PersonProperty[0]);
+                .orElse(EMPTY_PROPERTIES);
     }
 
 }

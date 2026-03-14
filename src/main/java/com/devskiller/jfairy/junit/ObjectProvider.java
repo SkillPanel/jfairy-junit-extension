@@ -6,8 +6,11 @@ import com.devskiller.jfairy.Bootstrap.Builder;
 import com.devskiller.jfairy.Fairy;
 import java.lang.reflect.AnnotatedElement;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 abstract class ObjectProvider {
+
+    private static final ConcurrentHashMap<String, Fairy> fairyCache = new ConcurrentHashMap<>();
 
     abstract boolean supports(Class<?> targetType);
 
@@ -29,19 +32,23 @@ abstract class ObjectProvider {
 
     private Fairy buildFairy(AnnotatedElement annotatedElement) {
         Faked faked = findAnnotation(annotatedElement, Faked.class).orElseThrow();
-        Builder builder = Fairy.builder();
-
         String locale = faked.locale();
-        if (!locale.isEmpty()) {
-            builder.withLocale(Locale.forLanguageTag(locale));
-        }
-
         int seed = faked.seed();
-        if (seed != -1) {
-            builder.withRandomSeed(seed);
-        }
+        String cacheKey = locale + ":" + seed;
 
-        return builder.build();
+        return fairyCache.computeIfAbsent(cacheKey, key -> {
+            Builder builder = Fairy.builder();
+
+            if (!locale.isEmpty()) {
+                builder.withLocale(Locale.forLanguageTag(locale));
+            }
+
+            if (seed != Faked.NO_SEED) {
+                builder.withRandomSeed(seed);
+            }
+
+            return builder.build();
+        });
     }
 
 }
