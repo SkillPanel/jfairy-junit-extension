@@ -29,7 +29,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <jfairy.version>0.7.1</jfairy.version>
+    <jfairy.version>0.7.2</jfairy.version>
     <junit.jupiter.version>5.11.4</junit.jupiter.version>
     <assertj.version>3.27.3</assertj.version>
   </properties>
