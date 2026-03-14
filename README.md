@@ -1,83 +1,82 @@
-# JUnit Extension for jFairy
+# jfairy-junit5
 
-[![Build Status](https://travis-ci.org/rweisleder/jfairy-junit-extension.svg?branch=master)](https://travis-ci.org/rweisleder/jfairy-junit-extension)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rweisleder/jfairy-junit-extension/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rweisleder/jfairy-junit-extension)
-[![Javadoc](http://javadoc-badge.appspot.com/com.github.rweisleder/jfairy-junit-extension.svg)](http://javadoc-badge.appspot.com/com.github.rweisleder/jfairy-junit-extension)
+JUnit 5 extension for [jFairy](https://github.com/SkillPanel/jfairy) — inject fake test data into your tests.
 
-[jFairy](https://github.com/Devskiller/jfairy) is a fake data generator.
-This JUnit extension provides simple injection of random data into fields and method parameters.
+## Usage
 
-```java
-@Test
-@ExtendWith(FairyExtension.class)
-void withRandomPerson(@Random Person person) {
-  System.out.println(person.getFullName());
-  // Chloe Barker
-}
-```
-
-## Documentation
-
-### Setup
-This extension resolves fields and method parameters annotated with `@Random`.
 ```java
 @ExtendWith(FairyExtension.class)
 class MyTest {
-  
-  @Random
-  private Person person1;
 
-  @Test
-  void example(@Random Person person2) {
-    // ...
-  }
+    @Test
+    void testPerson(@Faked Person person) {
+        assertNotNull(person.getFullName());
+    }
+
+    @Test
+    void testCompany(@Faked Company company) {
+        assertNotNull(company.getName());
+    }
+
+    @Test
+    void testWithLocale(@Faked(locale = "pl") Person person) {
+        assertNotNull(person.getFirstName());
+    }
+
+    @Test
+    void testWithSeed(@Faked(seed = 42) Person person) {
+        // deterministic — same seed produces same data
+        assertNotNull(person.getFullName());
+    }
 }
 ```
 
-The random generator can be customized with a locale and a seed.
+## Supported types
+
+| Type | Annotation | Customization |
+|------|-----------|---------------|
+| `Person` | `@Faked` | `@PersonWith(sex, minAge, maxAge)` |
+| `Company` | `@Faked` | — |
+| `Address` | `@Faked` | — |
+| `Fairy` | `@Faked` | — |
+| `String` | `@Faked` | `@StringWith(maxLength, type)` |
+| `Integer` / `int` | `@Faked` | `@IntegerWith(min, max)` |
+| `Boolean` / `boolean` | `@Faked` | — |
+| Any `Enum` | `@Faked` | — |
+
+## Field injection
+
 ```java
-@Random(locale = "de", seed = 1234)
+@ExtendWith(FairyExtension.class)
+class MyTest {
+
+    @Faked
+    @PersonWith(sex = MALE, minAge = 18)
+    private Person adultMale;
+
+    @Faked
+    @IntegerWith(min = 1, max = 100)
+    private int score;
+
+    @Test
+    void test() {
+        assertNotNull(adultMale);
+        assertThat(score).isBetween(1, 100);
+    }
+}
 ```
 
-### Supported Object Types
-*   `boolean` and `Boolean`
+## Maven
 
-    ```java
-    @Random
-    private boolean trueOrFalse;
-    ```
-*   `int` and `Integer` which can be customized using `@IntegerWith`
+```xml
+<dependency>
+    <groupId>com.devskiller</groupId>
+    <artifactId>jfairy-junit5</artifactId>
+    <version>0.1.0</version>
+    <scope>test</scope>
+</dependency>
+```
 
-    ```java
-    @Random
-    @IntegerWith(min = 50, max = 100)
-    private int i;
-    ```
-*   `String` which can be customized using `@StringWith`
+## License
 
-    ```java
-    @Random
-    @StringWith(maxLength = 20)
-    private String randomString;
-
-    @Random(locale = "de")
-    @StringWith(type = WORD)
-    private String germanWord;
-    ```
-*   Enum types
-
-    ```java
-    @Random
-    private Month month;
-    ```
-*   `Person` which can be customized using `@PersonWith`
-
-    ```java
-    @Random
-    @PersonWith(sex = MALE, minAge = 13, maxAge = 19)
-    private Person maleTeenager;
-    ```
-
-
-## Samples
-Look into the [ExampleTests](src/test/java/com/github/rweisleder/jfairy/ExampleTests.java).
+Apache License 2.0
