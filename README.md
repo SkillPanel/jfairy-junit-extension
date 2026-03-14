@@ -1,5 +1,7 @@
 # jfairy-junit5
 
+[![Build](https://github.com/SkillPanel/jfairy-junit-extension/actions/workflows/build.yml/badge.svg)](https://github.com/SkillPanel/jfairy-junit-extension/actions/workflows/build.yml)
+
 JUnit 5 extension for [jFairy](https://github.com/SkillPanel/jfairy) — inject fake test data into your tests.
 
 ## Usage
