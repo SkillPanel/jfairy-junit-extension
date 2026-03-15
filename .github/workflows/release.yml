@@ -36,7 +36,7 @@ jobs:
 
       - name: Build and deploy to Maven Central
         run: |
-          mvn -B clean deploy \
+          mvn -B clean deploy -P release \
             -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
